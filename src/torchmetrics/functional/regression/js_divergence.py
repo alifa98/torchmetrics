@@ -1,3 +1,16 @@
+# Copyright The Lightning team.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 from typing import Union
 
 import torch
@@ -16,12 +29,11 @@ def _jsd_update(p: Tensor, q: Tensor, log_prob: bool) -> tuple[Tensor, int]:
         q: Second probability distribution with shape ``[N, d]``
         log_prob: Boolean indicating if the inputs are log-probabilities or probabilities.
             If given as probabilities, they will be normalized so that each distribution sums to 1.
+
     """
     _check_same_shape(p, q)
     if p.ndim != 2 or q.ndim != 2:
-        raise ValueError(
-            f"Expected both p and q distributions to be 2D but got {p.ndim} and {q.ndim} respectively"
-        )
+        raise ValueError(f"Expected both p and q distributions to be 2D but got {p.ndim} and {q.ndim} respectively")
 
     total = p.shape[0]
     if log_prob:
